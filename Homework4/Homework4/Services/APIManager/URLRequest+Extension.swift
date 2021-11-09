@@ -8,11 +8,16 @@
 import Foundation
 
 public enum HTTPMethod: String {
+
+    // MARK: - HTTP Methods
+
     case get = "GET"
     case post = "POST"
 }
 
 public extension URLRequest {
+
+    // MARK: - Initializer
 
     init(components: URLComponents) {
         guard let url = components.url else {
@@ -20,6 +25,8 @@ public extension URLRequest {
         }
         self = Self(url: url)
     }
+
+    // MARK: - Instance methods
 
     private func map(_ transform: (inout Self) -> ()) -> Self {
         var request = self
@@ -64,7 +71,7 @@ public extension URLRequest {
 
 extension URLRequest {
 
-    // MARK: - Instance Methods
+    // MARK: - API Methods
 
     static func getRandomFact() -> Self {
         Self(components: .fact())

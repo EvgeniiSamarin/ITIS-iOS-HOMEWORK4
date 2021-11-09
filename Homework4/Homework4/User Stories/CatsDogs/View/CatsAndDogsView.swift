@@ -98,6 +98,8 @@ final class CatsAndDogsViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reset", style: .done, target: self, action: #selector(self.onResetButtonTapped))
     }
 
+    // MARK: - Setup View
+
     private func setupView() {
         self.view.backgroundColor = .white
 
@@ -111,6 +113,8 @@ final class CatsAndDogsViewController: UIViewController {
 
         self.moreButton.addTarget(nil, action: #selector(self.onMoreButtonTapped), for: .touchUpInside)
     }
+
+    // MARK: - Setup Constraints
 
     private func setupConstraints() {
         self.segmentControl.snp.makeConstraints { make in
@@ -153,6 +157,8 @@ final class CatsAndDogsViewController: UIViewController {
             make.centerY.centerX.equalToSuperview()
         }
     }
+
+    // MARK: - Bind View to ViewModel
 
     private func bindings() {
         self.bindViewModelToView()
@@ -234,6 +240,8 @@ final class CatsAndDogsViewController: UIViewController {
             }
             .store(in: &self.cancellable)
     }
+
+    // MARK: -
 
     @objc private func onMoreButtonTapped() {
         self.viewModel.getContent()

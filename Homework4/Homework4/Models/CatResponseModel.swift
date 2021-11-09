@@ -8,6 +8,9 @@
 import Foundation
 
 struct CatResponse: Decodable {
+
+    // MARK: - Instance Properties
+
     let fact: String
     let length: Int
 }
