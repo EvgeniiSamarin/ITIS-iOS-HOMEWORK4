@@ -17,6 +17,7 @@ final class CatsAndDogsViewController: UIViewController {
 
     private let viewModel = CatsAndDogsViewModel()
     private var cancellable = Set<AnyCancellable>()
+    private var selectedIndex: Int = 0
 
     // MARK: -
 
@@ -67,13 +68,6 @@ final class CatsAndDogsViewController: UIViewController {
         return imageView
     }()
 
-    private var contentPlaceholder: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.text = "Content"
-        return label
-    }()
-
     // MARK: - UIViewControllers methods
 
     override func viewDidLoad() {
@@ -109,7 +103,6 @@ final class CatsAndDogsViewController: UIViewController {
         self.view.addSubview(self.scoreLabel)
         self.contentView.addSubview(self.catsFact)
         self.contentView.addSubview(self.dogsImageView)
-        self.contentView.addSubview(self.contentPlaceholder)
 
         self.moreButton.addTarget(nil, action: #selector(self.onMoreButtonTapped), for: .touchUpInside)
     }
@@ -152,10 +145,6 @@ final class CatsAndDogsViewController: UIViewController {
         self.dogsImageView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
-
-        self.contentPlaceholder.snp.makeConstraints { make in
-            make.centerY.centerX.equalToSuperview()
-        }
     }
 
     // MARK: - Bind View to ViewModel
@@ -173,20 +162,14 @@ final class CatsAndDogsViewController: UIViewController {
                     self?.viewModel.contentType = .cats
                     self?.catsFact.isHidden = false
                     self?.dogsImageView.isHidden = true
-                    if self?.viewModel.score.catsScore == 0 {
-                        self?.contentPlaceholder.isHidden = false
-                    } else {
-                        self?.contentPlaceholder.isHidden = true
-                    }
                 } else {
                     self?.viewModel.contentType = .dogs
                     self?.catsFact.isHidden = true
                     self?.dogsImageView.isHidden = false
-                    if self?.viewModel.score.dogsScore == 0 {
-                        self?.contentPlaceholder.isHidden = false
-                    } else {
-                        self?.contentPlaceholder.isHidden = true
-                    }
+                }
+                if self?.selectedIndex != value {
+                    self?.viewModel.getContent()
+                    self?.selectedIndex = value
                 }
             }
             .store(in: &self.cancellable)
@@ -197,15 +180,8 @@ final class CatsAndDogsViewController: UIViewController {
         self.viewModel.$catsFact
             .receive(on: DispatchQueue.main)
             .sink { [weak self] fact in
-                if !fact.isEmpty {
-                    self?.catsFact.text = fact
-                    self?.contentPlaceholder.isHidden = true
-                    self?.catsFact.isHidden = false
-                } else {
-                    self?.contentPlaceholder.isHidden = false
-                    self?.catsFact.isHidden = true
-                }
-                
+                self?.catsFact.text = fact
+                self?.catsFact.isHidden = false
             }
             .store(in: &self.cancellable)
 
@@ -219,14 +195,8 @@ final class CatsAndDogsViewController: UIViewController {
         self.viewModel.$dogsImage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] stringUrl in
-                if !stringUrl.isEmpty {
-                    self?.dogsImageView.kf.setImage(with: URL(string: stringUrl))
-                    self?.contentPlaceholder.isHidden = true
-                    self?.dogsImageView.isHidden = false
-                } else {
-                    self?.contentPlaceholder.isHidden = false
-                    self?.dogsImageView.isHidden = true
-                }
+                self?.dogsImageView.kf.setImage(with: URL(string: stringUrl))
+                self?.dogsImageView.isHidden = false
             }
             .store(in: &self.cancellable)
 

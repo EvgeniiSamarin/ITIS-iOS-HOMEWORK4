@@ -18,8 +18,8 @@ final class CatsAndDogsViewModel {
     // MARK: - Instance Properties
 
     @Published var score: ScoreModel = ScoreModel()
-    @Published var catsFact: String = ""
-    @Published var dogsImage: String = ""
+    @Published var catsFact: String = "Content"
+    @Published var dogsImage: String = "Content"
 
     var contentType: ContentType = .cats
     let errorResult = PassthroughSubject<Error, Never>()
@@ -42,8 +42,8 @@ final class CatsAndDogsViewModel {
     }
 
     func resetView() {
-        self.catsFact = ""
-        self.dogsImage = ""
+        self.catsFact = "Content"
+        self.dogsImage = "Content"
         self.score.dogsScore = 0
         self.score.catsScore = 0
     }
