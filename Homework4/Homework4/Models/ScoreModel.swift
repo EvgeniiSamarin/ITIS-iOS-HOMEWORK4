@@ -8,6 +8,9 @@
 import Foundation
 
 struct ScoreModel {
+
+    // MARK: - Instance properties
+
     var catsScore: Int = 0
     var dogsScore: Int = 0
 }

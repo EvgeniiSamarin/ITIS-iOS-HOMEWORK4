@@ -10,7 +10,11 @@ import Combine
 
 final class APIManager {
 
+    // MARK: -
+
     static let shared = APIManager()
+
+    // MARK: - Instance Methods
 
     func getRandomCatFact() -> AnyPublisher<CatResponse, Error> {
         let request: URLRequest = .getRandomFact()

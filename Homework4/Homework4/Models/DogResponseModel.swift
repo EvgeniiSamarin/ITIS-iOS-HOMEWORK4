@@ -8,6 +8,9 @@
 import Foundation
 
 struct DogResponse: Decodable {
+
+    // MARK: - Instance Properties
+
     let message: String
     let status: String
 }

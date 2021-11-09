@@ -10,6 +10,8 @@ import Combine
 
 public extension URLSession {
 
+    // MARK: - Instance Methods
+
     func fetch<Response: Decodable>(for request: URLRequest) -> AnyPublisher<Response, Error> {
         dataTaskPublisher(for: request)
             .map(\.data)

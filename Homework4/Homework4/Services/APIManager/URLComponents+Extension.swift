@@ -9,6 +9,8 @@ import Foundation
 
 public extension URLComponents {
 
+    // MARK: - Initializer
+
     init(scheme: String = "https",
          host: String = "catfact.ninja",
          path: String,
@@ -23,6 +25,8 @@ public extension URLComponents {
 }
 
 extension URLComponents {
+
+    // MARK: - Instance methods
 
     static func fact() -> Self {
         let queryItems: [URLQueryItem] = [.init(name: "max_length", value: "140")]
